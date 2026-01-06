@@ -1,0 +1,142 @@
+{
+  "name": "Sales-Summary",
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "deepseek/deepseek-r1-0528:free",
+          "mode": "list",
+          "cachedResultName": "DEEPSEEK/DEEPSEEK-R1-0528:FREE"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are in charge of client orders. Your job is to take incoming information regarding new orders and give a nice summary that will be emailed to the team. The email should be signed off from \"Customer Success Team\".\n\nHere is the information on client orders.\nOrder ID:{{ $json['Order ID'] }}\nCustomer Name:{{ $json['Customer Name'] }}\nProduct:{{ $json.Product }}\nQuantity:{{ $json.Quantity }}\nPrice:{{ $json.Price }}\nOrder Date:{{ $json['Order Date'] }}\nStatus:{{ $json.Status }}\n\nPlease output the following parameters:\nEmail Subject\nEmail Body",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -32,
+        176
+      ],
+      "id": "ee05dc38-435d-4a43-8da3-10cffc275dc5",
+      "name": "Summarize",
+      "credentials": {
+        "openAiApi": {
+          "id": "IZs3yyr7MC1alFhK",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "daniyaliranmehr@gmail.com",
+        "subject": "={{ $json.message.content['Email Subject'] }}",
+        "emailType": "text",
+        "message": "={{ $json.message.content['Email Body'] }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        304,
+        304
+      ],
+      "id": "097a5cf0-fe93-423e-9388-e4c6cddbd33a",
+      "name": "Send a message",
+      "webhookId": "c963b4b4-46ed-4251-8978-1f1e34be8528",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Dh4XJOjo1nKOXL6X",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1y0rWQP61A9Co_Fsh5Y8AS2Tqi-Iy5LJPPvfZrhotvDY",
+          "mode": "list",
+          "cachedResultName": "Sales-List",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1y0rWQP61A9Co_Fsh5Y8AS2Tqi-Iy5LJPPvfZrhotvDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1y0rWQP61A9Co_Fsh5Y8AS2Tqi-Iy5LJPPvfZrhotvDY/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        304
+      ],
+      "id": "6a17e7c8-56f0-4910-b350-dd4fd05065d3",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "Zu0cIeS4ngOU2Qdz",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Summarize": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "2046b2e2-dac5-42da-a97a-6e122c1e300f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cf03ca4581c9e9d1df0b73705bcfd93230b7575598e757f2f13a6e6ab0974dce"
+  },
+  "id": "L7x5MVHfKphy2kXR",
+  "tags": []
+}
