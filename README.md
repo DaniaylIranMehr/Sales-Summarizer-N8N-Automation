@@ -25,6 +25,8 @@ An existing sale is updated or modified
 
 Sends the sales row data to the AI agent for processing
 
+![Google Sheet](Images/Sheet.png)
+
 ## 2. Summarize (AI Agent)
 
 Receives sales information from Google Sheets
