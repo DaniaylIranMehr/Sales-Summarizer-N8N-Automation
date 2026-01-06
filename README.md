@@ -7,7 +7,7 @@ The automation is built using n8n and is powered by a free DeepSeek large langua
 
 This workflow is suitable for small sellers or teams who want lightweight, cost-effective sales awareness without complex dashboards.
 
-![n8n Workflow](images/n8n-Workflow.png)
+![n8n Workflow](Images/n8n-Workflow.png)
 
 ### How It Works
 
