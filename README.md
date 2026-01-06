@@ -52,3 +52,5 @@ Sends the AI-generated summary to a specified Gmail address
 Uses Gmail OAuth2 authentication
 
 Ensures the sales team is immediately notified of new or updated orders
+
+![Gmail Massage](Images/Gmail-Massage.png)
